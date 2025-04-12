@@ -90,11 +90,11 @@ sampling_prob=args.batchsize/n_training
 steps = int(args.n_epoch/sampling_prob)
 
 if args.hdp == True:
-     noise_multiplier = get_noise_multiplier(target_epsilon= max_epsilon/2, target_delta=math.pow(len(train_loader), -1.1), 
-        sample_rate= mini_batch_size/len(train_loader),epochs=epochs, accountant='rdp')
+     noise_multiplier = get_noise_multiplier(target_epsilon= args.eps/2, target_delta=args.delta, 
+        sample_rate= sampling_prob, epochs=args.n_epoch, accountant='rdp')
 else:
-     noise_multiplier = get_noise_multiplier(target_epsilon= max_epsilon, target_delta=math.pow(len(train_loader), -1.1), 
-        sample_rate= mini_batch_size/len(train_loader),epochs=epochs, accountant='rdp')    
+     noise_multiplier = get_noise_multiplier(target_epsilon= args.eps, target_delta=args.delta, 
+        sample_rate= sampling_prob, epochs=args.n_epoch, accountant='rdp')    
 noise_multiplier = sigma
 
 print('noise scale: ', noise_multiplier, 'privacy guarantee: ', args.eps)
