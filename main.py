@@ -21,6 +21,9 @@ from main_utils import save_pro
 from backpack import backpack, extend
 from backpack.extensions import BatchGrad
 
+#privacy accountants
+from opacus.accountants.utils import get_noise_multiplier
+
 parser = argparse.ArgumentParser(description='Differentially Private learning with DP-SGD')
 
 ## general arguments
@@ -86,10 +89,12 @@ print('\n==> Computing noise scale for privacy budget (%.1f, %f)-DP'%(args.eps, 
 sampling_prob=args.batchsize/n_training
 steps = int(args.n_epoch/sampling_prob)
 
-if args.hdp==True:
-    sigma = 1.02
+if args.hdp == True:
+     noise_multiplier = get_noise_multiplier(target_epsilon= max_epsilon/2, target_delta=math.pow(len(train_loader), -1.1), 
+        sample_rate= mini_batch_size/len(train_loader),epochs=epochs, accountant='rdp')
 else:
-    sigma = 0.75 
+     noise_multiplier = get_noise_multiplier(target_epsilon= max_epsilon, target_delta=math.pow(len(train_loader), -1.1), 
+        sample_rate= mini_batch_size/len(train_loader),epochs=epochs, accountant='rdp')    
 noise_multiplier = sigma
 
 print('noise scale: ', noise_multiplier, 'privacy guarantee: ', args.eps)
