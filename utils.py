@@ -47,7 +47,7 @@ def process_grad_batch_with_rp(params, clipping, s_clipping, sigma):
             sorted_eig, indices = torch.sort(eigen_g, descending = True) #true >
           
             threshold_eig = sorted_eig[int(n/10)] 
-            eigen_g[eigen_g > threshold_eig] = 0
+            eigen_g[eigen_g > threshold_eig] = 0   # threshold_eig is the notation 'p' in paper
             num_hvt = torch.sum(eigen_g == 0).item()
            
         idx_layer += 1
