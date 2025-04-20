@@ -39,12 +39,12 @@ python train_gpt2.py --dataset e2e --dp_type dc-dpsgd --clip 0.2 --lr 5e-5
 
 ## ⚙️ Default Hyperparameters
 
-| Dataset        | Model        | Batch Size | Clip  | LR     | Notes                     |
-|----------------|--------------|------------|-------|--------|---------------------------|
-| MNIST/FMNIST   | CNN          | 128        | 0.1   | 1.0    | Simple 2-layer CNN        |
-| CIFAR10/HT     | ResNeXt-29   | 256        | 0.1   | 1.0    | SimCLR pre-trained        |
-| ImageNette/HT  | ResNet-9     | 1000       | 0.15  | 0.0001 | Trained from scratch      |
-| E2E            | GPT-2 (160M) | -          | 0.2   | 5e-5   | BLEU-based evaluation     |
+| Dataset        | Model        | Batch Size | Clip-c2  | Clip c1 | LR     | Notes                     |
+|----------------|--------------|------------|-------|-------|--------|---------------------------|
+| MNIST/FMNIST   | CNN          | 128        | 0.1   | 1     |0.1    | Simple 2-layer CNN        |
+| CIFAR10/HT     | ResNeXt-29   | 256        | 0.1   | 1     | 1.0    | SimCLR pre-trained        |
+| ImageNette/HT  | ResNet-9     | 1000       | 0.15  | 1.5   |0.0001 | Trained from scratch      |
+| E2E            | GPT-2 (160M) | -          | 0.1   | 1     | 5e-5   | BLEU-based evaluation     |
 
 ## 🔍 Baselines
 
@@ -59,7 +59,6 @@ We compare DC-DPSGD against:
 For detailed setup, see Section 5 of our paper. We use:
 - **LDAM-DRW loss** for CIFAR-HT/ImageNet-HT
 - **BackPACK** for per-sample gradient computation
-- **DPAdam** as the optimizer
 - Privacy budget ε = {1.0, 2.0, 4.0, 8.0}, δ = 1e-5
 
 ## 📚 Citation
@@ -72,16 +71,6 @@ For detailed setup, see Section 5 of our paper. We use:
   year      = {2024}
 }
 ```
-
-## 🔗 References
-
-- [SimCLRv2 Pretrain Code](https://github.com/ftamer/Handcrafted-DP)
-- [ResNeXt Pretrain](https://github.com/ftamer/Handcrafted-DP)
-- [ResNet-9 for ImageNette](https://github.com/cbenitezb21/Resnet9)
-- [LDAM-DRW Loss](https://github.com/kaidic/LDAM-DRW)
-
----
-
 
 ## ⚙️ Environment
 This code is tested on Linux system with CUDA version 11.0
@@ -97,4 +86,14 @@ scipy
 six
 backpack-for-pytorch
 ```
+
+## 🔗 References
+
+- [SimCLRv2 Pretrain Code](https://github.com/ftamer/Handcrafted-DP)
+- [ResNeXt Pretrain](https://github.com/ftamer/Handcrafted-DP)
+- [ResNet-9 for ImageNette](https://github.com/cbenitezb21/Resnet9)
+- [LDAM-DRW Loss](https://github.com/kaidic/LDAM-DRW)
+
+---
+
 
