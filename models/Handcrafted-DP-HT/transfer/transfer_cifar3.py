@@ -95,10 +95,10 @@ def main(feature_path=None, batch_size=2048, mini_batch_size=256,
     sampling_prob = bs / len(train_data)
 
     if hdp == True:
-         noise_multiplier = get_noise_multiplier(target_epsilon= args.eps/2, target_delta=args.delta, 
+         noise_multiplier = get_noise_multiplier(target_epsilon= eps/2, target_delta=delta, 
            sample_rate= sampling_prob, epochs=epochs, accountant='rdp')
     else:
-         noise_multiplier = get_noise_multiplier(target_epsilon= args.eps, target_delta=args.delta, 
+         noise_multiplier = get_noise_multiplier(target_epsilon= eps, target_delta=delta, 
            sample_rate= sampling_prob, epochs=epochs, accountant='rdp')    
     sigma = noise_multiplier
 
@@ -108,7 +108,7 @@ def main(feature_path=None, batch_size=2048, mini_batch_size=256,
         train_loss, train_acc = train_private(model, cls_num_list, per_cls_weights, train_loader, optimizer, hdp=hdp, clip=clip, s_clip=s_clip, noise_multiplier = sigma, n_acc_steps=n_acc_steps)
         test_loss, test_acc = test(model, test_loader)
          
-        logger.log_epoch(epoch, train_loss, train_acc, test_loss, test_acc)
+        logger.log_epoch(epoch, train_loss, train_acc, test_loss, test_acc, eps)
 
 
 if __name__ == '__main__':
