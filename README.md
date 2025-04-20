@@ -53,7 +53,7 @@ We compare DC-DPSGD against:
 ## 🧪 Per-sample Clipping
 
 - **BackPACK** for per-sample gradient computation
-- [https://docs.backpack.pt/](https://docs.backpack.pt/en/master/use_cases/example_differential_privacy.html)
+- [BackPACK](https://docs.backpack.pt/en/master/use_cases/example_differential_privacy.html)
 
 
 ## 📚 Citation
