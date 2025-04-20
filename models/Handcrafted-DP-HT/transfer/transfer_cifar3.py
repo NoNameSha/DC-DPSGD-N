@@ -18,6 +18,9 @@ from log import Logger
 from backpack import backpack, extend
 from backpack.extensions import BatchGrad
 
+#privacy accountants
+from opacus.accountants.utils import get_noise_multiplier
+
 
 def main(feature_path=None, batch_size=2048, mini_batch_size=256,
          lr=1, optim="SGD", momentum=0.9, nesterov=False, seed=1, noise_multiplier=1,
