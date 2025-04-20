@@ -44,12 +44,10 @@ We compare DC-DPSGD against:
 - DP-PSAC
 - Non-private baseline (ε = ∞)
 
-## 🧪 Experiments
+## 🧪 Per-sample Clipping
 
-For detailed setup, see Section 5 of our paper. We use:
-- **LDAM-DRW loss** for CIFAR-HT/ImageNet-HT
 - **BackPACK** for per-sample gradient computation
-- Privacy budget ε = {1.0, 2.0, 4.0, 8.0}, δ = 1e-5
+
 
 ## 📚 Citation
 
