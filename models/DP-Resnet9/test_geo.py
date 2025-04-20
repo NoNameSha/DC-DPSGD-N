@@ -22,6 +22,9 @@ from backpack.extensions import BatchGrad
 
 from imbalance_cifar import IMBALANCECIFAR10, IMBALANCECIFAR100, IMBALANEIMGNETTE
 
+#privacy accountants
+from opacus.accountants.utils import get_noise_multiplier
+
 
 def get_default_device():
     """Pick GPU if available, else CPU"""
@@ -186,11 +189,13 @@ def train_network(model, params, data_dir, batch_size = 200, epochs = 50, device
     #opt_func = torch.optim.Adam
     opt_func = torch.optim.Adam
 
-    if params.hdp==True:
-        sigma = 5.5 #5.5 # 2.8
+    if args.hdp == True:
+         noise_multiplier = get_noise_multiplier(target_epsilon= args.eps/2, target_delta=args.delta, 
+           sample_rate= sampling_prob, epochs=args.n_epoch, accountant='rdp')
     else:
-        sigma = 3.07 #3.07 #1.66
-    print("sigma:", sigma)
+         noise_multiplier = get_noise_multiplier(target_epsilon= args.eps, target_delta=args.delta, 
+           sample_rate= sampling_prob, epochs=args.n_epoch, accountant='rdp')    
+    sigma = noise_multiplier
     
     
     history = fit_one_cycle(epochs, max_lr, model, trainloader, testloader, params,
