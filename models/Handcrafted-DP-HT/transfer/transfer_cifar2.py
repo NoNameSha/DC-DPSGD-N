@@ -79,19 +79,16 @@ def main(feature_path=None, batch_size=2048, mini_batch_size=256,
     else:
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
 
-    # privacy_engine = PrivacyEngine(
-    #     model,
-    #     sample_rate=bs / len(train_data),
-    #     alphas=ORDERS,
-    #     noise_multiplier=noise_multiplier,
-    #     max_grad_norm=max_grad_norm,
-    # )
-    # privacy_engine.attach(optimizer)
+    sampling_prob = bs / len(train_data)
 
-    if hdp==True:
-        sigma = 0.89
+    if hdp == True:
+         noise_multiplier = get_noise_multiplier(target_epsilon= args.eps/2, target_delta=args.delta, 
+           sample_rate= sampling_prob, epochs=epochs, accountant='rdp')
     else:
-        sigma = 0.66
+         noise_multiplier = get_noise_multiplier(target_epsilon= args.eps, target_delta=args.delta, 
+           sample_rate= sampling_prob, epochs=epochs, accountant='rdp')    
+    sigma = noise_multiplier
+
     print("sigma:", sigma)
 
     for epoch in range(0, epochs):
@@ -130,6 +127,8 @@ if __name__ == '__main__':
     parser.add_argument('--feature_path', default=None)
     parser.add_argument('--max_epsilon', type=float, default=None)
     parser.add_argument('--logdir', default='log')
+    parser.add_argument('--eps', default=1, type=float, help='privacy budget-epsilon')
+    parser.add_argument('--delta', default=0.00001, type=float, help='privacy budget-delta')
     parser.add_argument('--hdp', default=False, type=bool, help='enable hdp-sgd')
     parser.add_argument('--clip', default= 0.01, type=float, help='gradient clipping bound') #0.01-1
     parser.add_argument('--s_clip', default= 0.1, type=float, help='gradient clipping bound')    
