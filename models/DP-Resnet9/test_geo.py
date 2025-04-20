@@ -189,12 +189,14 @@ def train_network(model, params, data_dir, batch_size = 200, epochs = 50, device
     #opt_func = torch.optim.Adam
     opt_func = torch.optim.Adam
 
+    sampling_prob = batch_size/len(trainloader)
+
     if args.hdp == True:
          noise_multiplier = get_noise_multiplier(target_epsilon= args.eps/2, target_delta=args.delta, 
-           sample_rate= sampling_prob, epochs=args.n_epoch, accountant='rdp')
+           sample_rate= sampling_prob, epochs=epochs, accountant='rdp')
     else:
          noise_multiplier = get_noise_multiplier(target_epsilon= args.eps, target_delta=args.delta, 
-           sample_rate= sampling_prob, epochs=args.n_epoch, accountant='rdp')    
+           sample_rate= sampling_prob, epochs=epochs, accountant='rdp')    
     sigma = noise_multiplier
     
     
@@ -266,6 +268,8 @@ def main():
                         type=int,
                         default="5")
     parser.add_argument('--hdp', default=False, type=bool, help='enable hdp-sgd')
+    parser.add_argument('--eps', default=1, type=float, help='privacy budget-epsilon')
+    parser.add_argument('--delta', default=0.00001, type=float, help='privacy budget-delta')
     parser.add_argument('--clip', default=0.15, type=float, help='gradient clipping bound') #0.01-1
     parser.add_argument('--s_clip', default= 1.5, type=float, help='gradient clipping bound')  
 
