@@ -11,6 +11,7 @@ models/
 ├── DP-CNN-based         # Two-layer CNNs for MNIST, FMNIST
 ├── DP-Resnet9           # ResNet-9 or ResNeXt-29 for CIFAR, ImageNette
 ├── Handcrafted-DP-HT    # Heavy-tailed training configurations
+├── ...
 ```
 
 ## 📊 Datasets & Tasks
