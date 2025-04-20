@@ -95,7 +95,7 @@ if args.hdp == True:
 else:
      noise_multiplier = get_noise_multiplier(target_epsilon= args.eps, target_delta=args.delta, 
         sample_rate= sampling_prob, epochs=args.n_epoch, accountant='rdp')    
-noise_multiplier = sigma
+# sigma = noise_multiplier
 
 print('noise scale: ', noise_multiplier, 'privacy guarantee: ', args.eps)
 
@@ -191,7 +191,7 @@ def train(epoch):
 
                 ### clip
                 if args.hdp == True:
-                    eigen_g, num_hvt = process_grad_batch_with_rp(list(net.parameters()), args.clip, args.s_clip, sigma)
+                    eigen_g, num_hvt = process_grad_batch_with_rp(list(net.parameters()), args.clip, args.s_clip, noise_multiplier)
                 else:
                     process_grad_batch(list(net.parameters()), args.clip)
                 
