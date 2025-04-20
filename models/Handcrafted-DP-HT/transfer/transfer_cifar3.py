@@ -24,7 +24,7 @@ from opacus.accountants.utils import get_noise_multiplier
 
 def main(feature_path=None, batch_size=2048, mini_batch_size=256,
          lr=1, optim="SGD", momentum=0.9, nesterov=False, seed=1, noise_multiplier=1,
-         max_grad_norm=0.1, hdp=False, clip=0.1, s_clip = 1, max_epsilon=None, epochs=40, logdir=None):
+         max_grad_norm=0.1, hdp=False, clip=0.1, s_clip = 1, max_epsilon=None, eps=1, delta=0.00001, epochs=40, logdir=None):
 
 
     current_time = time.strftime("%Y%m%d-%H%M%S", time.localtime())
@@ -92,41 +92,23 @@ def main(feature_path=None, batch_size=2048, mini_batch_size=256,
     else:
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
 
-    # privacy_engine = PrivacyEngine(
-    #     model,
-    #     sample_rate=bs / len(train_data),
-    #     alphas=ORDERS,
-    #     noise_multiplier=noise_multiplier,
-    #     max_grad_norm=max_grad_norm,
-    # )
-    # privacy_engine.attach(optimizer)
+    sampling_prob = bs / len(train_data)
 
-    if hdp==True:
-        sigma = 1.18 #2.72 #1.34
+    if hdp == True:
+         noise_multiplier = get_noise_multiplier(target_epsilon= args.eps/2, target_delta=args.delta, 
+           sample_rate= sampling_prob, epochs=epochs, accountant='rdp')
     else:
-        sigma = 1.18 #0.91
-    print("sigma:", sigma)
+         noise_multiplier = get_noise_multiplier(target_epsilon= args.eps, target_delta=args.delta, 
+           sample_rate= sampling_prob, epochs=epochs, accountant='rdp')    
+    sigma = noise_multiplier
 
     for epoch in range(0, epochs):
         print(f"\nEpoch: {epoch}")
 
         train_loss, train_acc = train_private(model, cls_num_list, per_cls_weights, train_loader, optimizer, hdp=hdp, clip=clip, s_clip=s_clip, noise_multiplier = sigma, n_acc_steps=n_acc_steps)
         test_loss, test_acc = test(model, test_loader)
-
-        # # if noise_multiplier > 0:
-        #     rdp_sgd = get_renyi_divergence(
-        #         privacy_engine.sample_rate, privacy_engine.noise_multiplier
-        #     ) * privacy_engine.steps
-        #     epsilon, _ = get_privacy_spent(rdp_sgd)
-        #     print(f"ε = {epsilon:.3f}")
-
-            # if max_epsilon is not None and epsilon >= max_epsilon:
-            #     return
-        # else:
-        #     epsilon = None
-        
-        epsilon = 2
-        logger.log_epoch(epoch, train_loss, train_acc, test_loss, test_acc, epsilon)
+         
+        logger.log_epoch(epoch, train_loss, train_acc, test_loss, test_acc)
 
 
 if __name__ == '__main__':
