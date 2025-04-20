@@ -34,7 +34,7 @@ Please refer to the different details in the notes of each code file.
 | MNIST/FMNIST   | CNN          | 128        | 0.1   | 1     |0.1    | Simple 2-layer CNN        |
 | CIFAR10/HT     | ResNeXt-29   | 256        | 0.1   | 1     | 1.0    | SimCLR pre-trained        |
 | ImageNette/HT  | ResNet-9     | 1000       | 0.15  | 1.5   |0.0001 | Trained from scratch      |
-| E2E            | GPT-2 (160M) | -          | 0.1   | 1     | 5e-5   | BLEU-based evaluation     |
+| E2E            | GPT-2 (160M) | 100          | 0.1   | 1     | 2e-3   | BLEU-based evaluation     |
 
 ## 🔍 Baselines
 
@@ -77,6 +77,7 @@ backpack-for-pytorch
 - [ResNeXt Pretrain](https://github.com/ftamer/Handcrafted-DP)
 - [ResNet-9 for ImageNette](https://github.com/cbenitezb21/Resnet9)
 - [LDAM-DRW Loss](https://github.com/kaidic/LDAM-DRW)
+- [NLP tasks](https://github.com/lxuechen/private-transformers)
 
 ---
 
