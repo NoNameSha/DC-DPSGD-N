@@ -46,6 +46,8 @@ We compare DC-DPSGD against:
 - DP-PSAC
 - Non-private baseline (ε = ∞)
 
+![baselines](./models/gradient_weight_v3.jpg)
+
 ## 🧪 Per-sample Clipping
 
 - **BackPACK** for per-sample gradient computation
