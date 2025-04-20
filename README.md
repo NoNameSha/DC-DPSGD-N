@@ -78,8 +78,7 @@ backpack-for-pytorch
 
 ## 🔗 References
 
-- [SimCLRv2 Pretrain Code](https://github.com/ftamer/Handcrafted-DP)
-- [ResNeXt Pretrain](https://github.com/ftamer/Handcrafted-DP)
+- [SimCLRv2/ResNeXt Pretrain Code](https://github.com/ftamer/Handcrafted-DP)
 - [ResNet-9 for ImageNette](https://github.com/cbenitezb21/Resnet9)
 - [LDAM-DRW Loss](https://github.com/kaidic/LDAM-DRW)
 - [NLP tasks](https://github.com/lxuechen/private-transformers)
