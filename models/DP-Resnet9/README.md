@@ -14,14 +14,6 @@ Uncompress the folder in any location and run the following command
 
 The training data folder must have 2 folders called set_test and set_train
 
-## Testing
-
-For testing you can run the following command
-
-`python test_geo.py --test PATH_TO_TEST_IMAGE --k 10`
-
-where k is the number of top k images similar to the testing one
-
 
 
 ### References
