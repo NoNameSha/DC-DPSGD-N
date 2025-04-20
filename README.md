@@ -25,17 +25,7 @@ We evaluate DC-DPSGD on:
 
 ## 🚀 How to Run
 
-Train ResNeXt-29 on CIFAR10 using DC-DPSGD:
-
-```bash
-python train.py --dataset cifar10 --model resnext29 --dp_type dc-dpsgd --epsilon 8.0 --lr 1.0 --clip 0.1
-```
-
-Train GPT-2 for E2E text generation:
-
-```bash
-python train_gpt2.py --dataset e2e --dp_type dc-dpsgd --clip 0.2 --lr 5e-5
-```
+Please refer to the different details in the notes of each code file.
 
 ## ⚙️ Default Hyperparameters
 
@@ -64,12 +54,6 @@ For detailed setup, see Section 5 of our paper. We use:
 ## 📚 Citation
 
 ```bibtex
-@inproceedings{dc-dpsgd2024,
-  title     = {Distributionally Concentrated DPSGD under Heavy-tailed Gradients},
-  author    = {Your Name and Collaborators},
-  booktitle = {To Appear},
-  year      = {2024}
-}
 ```
 
 ## ⚙️ Environment
